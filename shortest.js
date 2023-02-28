@@ -75,7 +75,7 @@ class ShortestRemainingTimeFirstScheduler {
     // updates the scheduler's clocktime
     this.clockTimeIntervalId = setInterval(() => {
       this.clockTime += 0.5;
-    }, 498);
+    }, 490);
 
     while (true) {
       let currentProcess = this.getNextProcess();
@@ -258,7 +258,7 @@ class ShortestRemainingTimeFirstScheduler {
           .join(", ")}`
       );
       console.log(`Wait Time: ${waitTime}s`);
-      console.log(`Service Time: ${serviceTime}s`);
+      console.log(`Turn Around Time: ${serviceTime}s`);
       console.log("");
     });
     console.log("===");
@@ -275,7 +275,7 @@ class ShortestRemainingTimeFirstScheduler {
       }s`
     );
     console.log(
-      `Average Service Time: ${
+      `Average Turn Around Time: ${
         serviceTimes.reduce((t, c) => t + c, 0) / serviceTimes.length
       }s`
     );
@@ -288,21 +288,17 @@ const scheduler = new ShortestRemainingTimeFirstScheduler({
   verbose: 6,
   waitIdle: false,
 });
-scheduler.add(new Process("P1", 4));
-scheduler.add(new Process("P2", 3));
-scheduler.add(new Process("P3", 5));
+scheduler.add(new Process("P1", 7));
 
 scheduler.start();
 
-// wrapping the scheduler.add method in a setTimeout to simulate adding a process
-// at a time other than time 0
 setTimeout(() => {
-  scheduler.add(new Process("P4", 1));
+  scheduler.add(new Process("P2", 3));
 }, 1000);
 
 setTimeout(() => {
-  scheduler.add(new Process("P5", 1));
-}, 5000);
+  scheduler.add(new Process("P3", 4));
+}, 3000);
 
 process.stdin.on("data", (chunk) => {
   const input = chunk.toString().trim().split(" ");
